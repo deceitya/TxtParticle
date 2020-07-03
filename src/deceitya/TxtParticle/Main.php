@@ -12,6 +12,11 @@ use pocketmine\Player;
 
 class Main extends PluginBase
 {
+    public function onEnable()
+    {
+        $this->saveResource('unko.txt');
+    }
+
     public function onCommand(CommandSender $sender, Command $command, string $rabel, array $args): bool
     {
         if (!($sender instanceof Player)) {
