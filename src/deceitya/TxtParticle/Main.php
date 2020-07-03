@@ -32,23 +32,21 @@ class Main extends PluginBase
         try {
             $file = fopen("{$this->getDataFolder()}{$args[0]}.txt", 'r');
             if ($file !== false) {
+                $particles = [];
                 $z = 0;
-                $particle = new FlameParticle($sender);
                 while ($line = fgets($file)) {
                     $x = 0;
                     foreach (str_split($line) as $str) {
                         if ($str === '#') {
-                            $particle->x = $x + $sender->x;
-                            $particle->y = $sender->y + 1;
-                            $particle->z = $z + $sender->z;
-                            $sender->level->addParticle($particle);
+                            $particles[] = new FlameParticle($sender->add($x, 0, $z));
                         }
-
                         $x += 0.3;
                     }
-
                     $z += 0.3;
                 }
+
+                // periodが短いとパーティクルが一部表示されないので長めに設定しています
+                $this->getScheduler()->scheduleRepeatingTask(new KeepShowingParticlesTask($particles, $sender->level), 60);
             }
         } catch (\Exception $e) {
             $sender->sendMessage("{$args[0]}.txt not found");
