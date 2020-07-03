@@ -1,0 +1,15 @@
+name: TxtParticle
+main: deceitya\TxtParticle\Main
+version: 1.0.0
+api: [3.14.0]
+author: deceitya
+load: POSTWORLD
+description: txtファイルを読み込んでパーティクルを生成
+commands:
+  txtp:
+    description: txtファイルを読み込んでパーティクルを生成
+    usage: "/txtp <.txt>"
+    permission: txtparticle.command.txtp
+permissions:
+  txtparticle.command.txtp:
+    default: true
